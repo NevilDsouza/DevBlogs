@@ -1,13 +1,15 @@
+import { Link } from "react-router-dom";
+
 export default function NavigationBar() {
   return (
     <nav>
-      <a href="/" className="blog-logo">
+      <Link to="/" className="blog-logo">
         Blogify
-      </a>
+      </Link>
 
       <div>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+        <Link to="/login">Login</Link>
+        <Link to="/register">Register</Link>
       </div>
     </nav>
   );
