@@ -1,0 +1,28 @@
+body {
+  color: #222;
+}
+
+main {
+  padding: 10px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+nav a {
+  all: unset;
+}
+
+.blog-logo {
+  font-weight: bold;
+}
+
+nav div {
+  display: flex;
+  gap: 15px;
+}
