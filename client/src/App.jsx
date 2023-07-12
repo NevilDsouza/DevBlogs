@@ -1,18 +1,14 @@
 import "./App.css";
+import NavigationBar from "./NavigationBar";
+import Post from "./Post";
 
 function App() {
   return (
     <main>
-      <nav>
-        <a href="#" className="blog-logo">
-          Blogify
-        </a>
-
-        <div>
-          <a href="#">Login</a>
-          <a href="#">Register</a>
-        </div>
-      </nav>
+      <NavigationBar />
+      <Post />
+      <Post />
+      <Post />
     </main>
   );
 }

@@ -2,9 +2,13 @@ body {
   color: #222;
 }
 
+img {
+  width: 100%;
+}
+
 main {
   padding: 10px;
-  max-width: 500px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -12,17 +16,56 @@ nav {
   display: flex;
   justify-content: space-between;
   margin-bottom: 50px;
+  align-items: center;
+  padding-top: 20px;
 }
 
-nav a {
+a {
   all: unset;
+  cursor: pointer;
 }
 
 .blog-logo {
   font-weight: bold;
+  font-size: 1.6rem;
 }
 
 nav div {
   display: flex;
   gap: 15px;
+}
+
+div.post {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+div.post div.texts {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+div.post img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.article-info {
+  font-size: 0.9rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+  color: #888;
+}
+
+.author {
+  color: #333;
+}
+
+.article-summary {
+  margin: 8px 0;
 }
