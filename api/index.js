@@ -17,6 +17,7 @@ const fs = require('fs');
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(cookieParser());
+app.use('/uploads', express.static(__dirname + '/uploads'));
 
 mongoose.connect('mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@cluster0.o7ix6h4.mongodb.net/?retryWrites=true&w=majority');
 
@@ -78,15 +79,72 @@ app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
     const newPath = path + "." + ext;
     fs.renameSync(path, newPath);
 
-    const { title, summary, content } = req.body;
+    const { token } = req.cookies;
+    if (token === '') return;
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) throw err;
 
-    const postDoc = await Post.create({
-        title,
-        summary,
-        content,
-        cover: newPath
+        const { title, summary, content } = req.body;
+
+        const postDoc = await Post.create({
+            title,
+            summary,
+            content,
+            cover: newPath,
+            author: info.id,
+        });
+
+        res.json(postDoc);
+    });
+});
+
+app.put('/post', uploadMiddleware.single('file'), async (req, res) => {
+    let newPath = null;
+    if (req.file) {
+        const { originalname, path } = req.file;
+        const parts = originalname.split('.');
+        const ext = parts[parts.length - 1];
+        // res.json({ ext });
+        newPath = path + "." + ext;
+        fs.renameSync(path, newPath);
+    }
+
+
+    const { token } = req.cookies;
+
+    if (token === '') return;
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) throw err;
+
+        const { id, title, summary, content } = req.body;
+        const postDoc = await Post.findById(id);
+        const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
+
+        if (!isAuthor) {
+            return res.status(400).json("You are not the author");
+        }
+
+        await Post.findOneAndUpdate({ _id: id }, {
+            title,
+            summary,
+            content,
+            cover: newPath ? newPath : postDoc.cover
+        });
+
+        res.json(postDoc);
     });
 
+});
+
+app.get('/post', async (req, res) => {
+    res.json(await Post.find()
+        .populate('author', ['username'])
+        .sort({ "createdAt": -1 }));
+});
+
+app.get('/post/:id', async (req, res) => {
+    const { id } = req.params;
+    const postDoc = await Post.findById(id).populate('author', ['username']);
     res.json(postDoc);
 });
 
