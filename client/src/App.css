@@ -80,8 +80,7 @@ div.post img {
   margin: 0 auto;
 }
 
-.login input,
-.register input {
+input {
   display: block;
   width: 100%;
   margin-bottom: 8px;
@@ -90,14 +89,17 @@ div.post img {
   border-radius: 4px;
 }
 
-.login button,
-.register button {
+button {
   width: 100%;
   padding: 8px 0;
   border: 0;
   border-radius: 5px;
   background-color: #555;
   color: #fff;
+}
+
+.create-post button {
+  margin-top: 8px;
 }
 
 .login h1,
