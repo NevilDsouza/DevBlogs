@@ -2,36 +2,7 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { Navigate } from "react-router-dom";
-
-const modules = {
-  toolbar: [
-    [{ header: [1, 2, false] }],
-    ["bold", "italic", "underline", "strike", "blockquote", "code-block"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-    ],
-    ["link", "image"],
-    ["clean"],
-  ],
-};
-
-const format = [
-  "header",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "code-block",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-];
+import Editor from "../Editor";
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
@@ -79,12 +50,7 @@ export default function CreatePost() {
         onChange={(e) => setSummary(e.target.value)}
       />
       <input type="file" onChange={(e) => setFiles(e.target.files)} />
-      <ReactQuill
-        value={content}
-        onChange={(newVal) => setContent(newVal)}
-        modules={modules}
-        format={format}
-      />
+      <Editor value={content} onChange={setContent} />
       <button>Create Post</button>
     </form>
   );
