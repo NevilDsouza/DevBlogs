@@ -1,29 +1,27 @@
-export default function Post() {
+import { formatISO9075 } from "date-fns";
+
+export default function Post({
+  title,
+  summary,
+  cover,
+  content,
+  createdAt,
+  author,
+}) {
   return (
     <div className="post">
-      <img
-        src="https://i0.wp.com/css-tricks.com/wp-content/uploads/2023/02/clock-sin-cos-trig.png?w=1200&ssl=1"
-        alt="clock"
-      />
+      <img src={"http://localhost:4000/" + cover} />
       <div className="texts">
-        <h2>
-          Creating a Clock with the New CSS sin() and cos() Trigonometry
-          Functions{" "}
-        </h2>
+        <h2>{title}</h2>
 
         <div className="article-info">
           <a href="#" className="author">
-            Nevil Dsouza
+            {author.username}
           </a>
-          <time>12-07-2023 18:51</time>
+          <time>{formatISO9075(new Date(createdAt))}</time>
         </div>
 
-        <p className="article-summary">
-          CSS trigonometry functions are here! Well, they are if you’re using
-          the latest versions of Firefox and Safari, that is. Having this sort
-          of mathematical power in CSS opens up a whole bunch of possibilities.
-          In this tutorial, I thought …
-        </p>
+        <p className="article-summary">{summary}</p>
       </div>
     </div>
   );

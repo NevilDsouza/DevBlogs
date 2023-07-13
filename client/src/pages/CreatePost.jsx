@@ -53,6 +53,7 @@ export default function CreatePost() {
     fetch("http://localhost:4000/post", {
       method: "POST",
       body: data,
+      credentials: "include",
     }).then((response) => {
       if (response.ok) {
         setRedirect(true);
